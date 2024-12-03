@@ -1,27 +1,21 @@
-from flask import Flask, request, jsonify
-from PIL import Image
-import io
-import base64
+#.\env\scripts\activate
+
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route('/grayscale', methods=['POST'])
-def grayscale():
-    # Get the image from the request
-    file = request.files['image']
-    image = Image.open(file)
+@app.route("/")           ##for different different pages
+def hello_world():
+    return 'Hello World';
+    # pass
+    # return render_template('index.html')
+    # return "Hello World!"
 
-    # Convert the image to grayscale
-    grayscale_image = image.convert('L')
-
-    # Save image to bytes buffer
-    buf = io.BytesIO()
-    grayscale_image.save(buf, format='PNG')
-    byte_im = buf.getvalue()
-
-    # Convert to base64 for JSON response
-    img_str = base64.b64encode(byte_im).decode('utf-8')
-    return jsonify({'image': img_str})
+# @app.route("/product")
+# def products():          
+#     return "This is products page!"  ##if default function i.e '@app.route("/")' is not returning anything then it will make this return as default
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
